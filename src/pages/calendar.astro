@@ -4,7 +4,11 @@ import Ornament from '../components/Ornament.astro';
 import { parish } from '../data/parish';
 
 const calendars = Object.values(parish.calendars);
-const embedSrc = `https://calendar.google.com/calendar/embed?height=700&wkst=1&bgcolor=%23ffffff&ctz=America%2FChicago&showTitle=0&showPrint=0&showTabs=1&showCalendars=1&src=${encodeURIComponent(parish.calendars.services.src)}&src=${encodeURIComponent(parish.calendars.feasts.src)}&src=${encodeURIComponent(parish.calendars.events.src)}&color=%230B1C3D&color=%23C9A227&color=%235C1F2A`;
+const embedBase = `https://calendar.google.com/calendar/embed?height=700&wkst=1&bgcolor=%23ffffff&ctz=America%2FChicago&showTitle=0&showPrint=0&showTabs=0&showCalendars=1&src=${encodeURIComponent(parish.calendars.services.src)}&src=${encodeURIComponent(parish.calendars.feasts.src)}&src=${encodeURIComponent(parish.calendars.events.src)}&color=%230B1C3D&color=%23C9A227&color=%235C1F2A`;
+const embedViews = {
+	month: `${embedBase}&mode=MONTH`,
+	list: `${embedBase}&mode=AGENDA`,
+} as const;
 ---
 
 <BaseLayout
@@ -57,13 +61,47 @@ const embedSrc = `https://calendar.google.com/calendar/embed?height=700&wkst=1&b
 			<h2>Parish Calendar</h2>
 			<Ornament />
 		</div>
+		<div class="calendar-toolbar" data-calendar-views={JSON.stringify(embedViews)}>
+			<div class="calendar-view-toggle" role="group" aria-label="Calendar view">
+				<button type="button" class="is-active" data-view="month" aria-pressed="true">
+					Month
+				</button>
+				<button type="button" data-view="list" aria-pressed="false">List</button>
+			</div>
+		</div>
 		<iframe
+			id="parish-calendar"
 			class="calendar-frame"
-			src={embedSrc}
+			src={embedViews.month}
 			title="Saint Thomas the Apostle parish calendar"
 			loading="lazy"
 			referrerpolicy="no-referrer-when-downgrade"></iframe>
 	</section>
+
+	<script>
+		const toolbar = document.querySelector<HTMLElement>('.calendar-toolbar');
+		const frame = document.querySelector<HTMLIFrameElement>('#parish-calendar');
+		if (toolbar && frame) {
+			const views = JSON.parse(toolbar.dataset.calendarViews ?? '{}') as Record<string, string>;
+			const buttons = toolbar.querySelectorAll<HTMLButtonElement>('[data-view]');
+			let activeView = 'month';
+
+			buttons.forEach((button) => {
+				button.addEventListener('click', () => {
+					const view = button.dataset.view;
+					if (!view || !views[view] || view === activeView) return;
+
+					activeView = view;
+					frame.src = views[view];
+					buttons.forEach((btn) => {
+						const active = btn === button;
+						btn.classList.toggle('is-active', active);
+						btn.setAttribute('aria-pressed', String(active));
+					});
+				});
+			});
+		}
+	</script>
 
 	<section class="section reveal">
 		<div class="section-head">
