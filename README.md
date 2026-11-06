@@ -18,6 +18,15 @@ npm run build
 npm run preview
 ```
 
+## Deploy (Cloudflare)
+
+The site is a static build hosted on Cloudflare Workers (free `*.workers.dev` URL until a custom domain is ready).
+
+```bash
+npx wrangler login
+npm run deploy
+```
+
 ## Content
 
 - Reflections live in `src/content/reflections/`
