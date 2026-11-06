@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
+import { parish } from '../data/parish';
+---
+
+<BaseLayout
+	title="Donate"
+	description="Support the life and ministry of Saint Thomas the Apostle Orthodox Church."
+>
+	<header class="page-hero">
+		<h1>Donate</h1>
+		<Ornament />
+		<p>Thank you for supporting the life and ministry of our parish.</p>
+	</header>
+
+	<section class="section">
+		<div class="panel donate-panel reveal">
+			<figure class="icon-aside" style="min-height: 14rem; margin-bottom: 1.5rem;">
+				<img
+					src="/icons/pantocrator.jpg"
+					alt="Icon of Christ Pantocrator"
+					width="1280"
+					height="2388"
+					loading="lazy"
+					style="object-position: center 12%;"
+				/>
+			</figure>
+			<p>
+				Your offering helps sustain worship, hospitality, and the ongoing work of Saint Thomas the
+				Apostle Orthodox Church in Springfield.
+			</p>
+			<div class="cta-row" style="justify-content: center; margin-top: 1.5rem;">
+				<a
+					class="btn btn-solid"
+					href={parish.donateUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Give with Tithe.ly
+				</a>
+			</div>
+			<p style="margin-top: 1.25rem; font-size: 0.92rem; color: var(--ink-soft);">
+				You will be taken to Tithe.ly, the parish's secure online giving form.
+			</p>
+		</div>
+	</section>
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Ornament from '../../components/Ornament.astro';
+
+const reflections = (await getCollection('reflections')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout
+	title="Reflections"
+	description="Parish reflections from Saint Thomas the Apostle Orthodox Church."
+>
+	<header class="page-hero">
+		<h1>Reflections</h1>
+		<Ornament />
+		<p>Words for the seasons of the Church year and the life of faith.</p>
+	</header>
+
+	<section class="section section-narrow reveal">
+		<ul class="list-links">
+			{
+				reflections.map((post) => (
+					<li>
+						<a href={`/reflections/${post.id}/`}>
+							<span class="list-title">{post.data.title}</span>
+							<span class="list-meta">
+								{post.data.date.toLocaleDateString('en-US', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric',
+								})}
+							</span>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</BaseLayout>

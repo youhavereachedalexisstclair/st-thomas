@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Ornament from '../../../components/Ornament.astro';
+import { recipeCategoryLabels } from '../../../data/parish';
+
+export async function getStaticPaths() {
+	const recipes = await getCollection('recipes');
+	return recipes.map((recipe) => ({
+		params: { id: recipe.id },
+		props: { recipe },
+	}));
+}
+
+const { recipe } = Astro.props;
+const { Content } = await render(recipe);
+---
+
+<BaseLayout title={recipe.data.title} description={recipe.data.title}>
+	<header class="page-hero">
+		<h1>{recipe.data.title}</h1>
+		<Ornament />
+		<div class="meta-row" style="color: color-mix(in srgb, var(--parchment) 75%, transparent);">
+			{
+				recipe.data.categories.map((cat) => (
+					<a href={`/recipes/${cat}/`} style="color: var(--gold-400);">
+						{recipeCategoryLabels[cat]}
+					</a>
+				))
+			}
+		</div>
+	</header>
+
+	<section class="section">
+		<article class="prose panel reveal">
+			<Content />
+			{
+				recipe.data.sourceUrl && (
+					<p style="margin-top: 1.5rem;">
+						<a href={recipe.data.sourceUrl} target="_blank" rel="noopener noreferrer">
+							Open original recipe source →
+						</a>
+					</p>
+				)
+			}
+			<p style="margin-top: 2rem;">
+				<a href="/recipes/">← All Recipes</a>
+			</p>
+		</article>
+	</section>
+</BaseLayout>

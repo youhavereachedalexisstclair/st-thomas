@@ -1,0 +1,54 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const {
+	title,
+	description = 'Saint Thomas the Apostle Orthodox Church — a parish of the Diocese of the Midwest (OCA) in Springfield, Missouri.',
+} = Astro.props;
+
+const fullTitle =
+	title === 'Home'
+		? 'Saint Thomas the Apostle Orthodox Church'
+		: `${title} · Saint Thomas the Apostle Orthodox Church`;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{fullTitle}</title>
+	</head>
+	<body>
+		<a class="skip-link" href="#content">Skip to content</a>
+		<Header />
+		<main class="site-main" id="content">
+			<slot />
+		</main>
+		<Footer />
+		<script>
+			const observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-visible');
+							observer.unobserve(entry.target);
+						}
+					}
+				},
+				{ threshold: 0.12 },
+			);
+			document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+		</script>
+	</body>
+</html>

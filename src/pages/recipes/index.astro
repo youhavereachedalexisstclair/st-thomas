@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Ornament from '../../components/Ornament.astro';
+import { recipeCategoryLabels } from '../../data/parish';
+
+const recipes = await getCollection('recipes');
+const categories = Object.entries(recipeCategoryLabels).map(([slug, label]) => ({
+	slug,
+	label,
+	count: recipes.filter((r) => r.data.categories.includes(slug as keyof typeof recipeCategoryLabels)).length,
+}));
+---
+
+<BaseLayout
+	title="Recipes"
+	description="Lenten and fasting-friendly recipes from Saint Thomas the Apostle Orthodox Church."
+>
+	<header class="page-hero">
+		<h1>Recipes</h1>
+		<Ornament />
+		<p>Lenten and fasting-friendly recipes shared by the parish.</p>
+	</header>
+
+	<section class="section reveal">
+		<div class="category-grid">
+			{
+				categories.map((cat) => (
+					<a class="category-link" href={`/recipes/${cat.slug}/`}>
+						{cat.label}
+						<br />
+						<span style="font-size: 0.85rem; letter-spacing: 0.08em; opacity: 0.8;">
+							{cat.count} recipes
+						</span>
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="section section-narrow reveal">
+		<div class="section-head">
+			<h2>All Recipes</h2>
+			<Ornament />
+		</div>
+		<ul class="list-links">
+			{
+				recipes
+					.sort((a, b) => a.data.title.localeCompare(b.data.title))
+					.map((recipe) => (
+						<li>
+							<a href={`/recipes/dish/${recipe.id}/`}>
+								<span class="list-title">{recipe.data.title}</span>
+								<span class="list-meta">
+									{recipe.data.categories.map((c) => recipeCategoryLabels[c]).join(' · ')}
+								</span>
+							</a>
+						</li>
+					))
+			}
+		</ul>
+	</section>
+</BaseLayout>

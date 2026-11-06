@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Ornament from '../../components/Ornament.astro';
+import { recipeCategoryLabels } from '../../data/parish';
+
+const categorySlugs = Object.keys(recipeCategoryLabels);
+
+export async function getStaticPaths() {
+	return Object.keys(recipeCategoryLabels).map((category) => ({
+		params: { category },
+	}));
+}
+
+const { category } = Astro.params;
+const label = recipeCategoryLabels[category!];
+const recipes = (await getCollection('recipes'))
+	.filter((recipe) => recipe.data.categories.includes(category as (typeof categorySlugs)[number]))
+	.sort((a, b) => a.data.title.localeCompare(b.data.title));
+---
+
+<BaseLayout title={label} description={`${label} recipes from Saint Thomas the Apostle Orthodox Church.`}>
+	<header class="page-hero">
+		<h1>{label}</h1>
+		<Ornament />
+		<p>
+			<a href="/recipes/" style="color: var(--gold-400);">All recipe categories</a>
+		</p>
+	</header>
+
+	<section class="section section-narrow reveal">
+		<ul class="list-links">
+			{
+				recipes.map((recipe) => (
+					<li>
+						<a href={`/recipes/dish/${recipe.id}/`}>
+							<span class="list-title">{recipe.data.title}</span>
+							{
+								recipe.data.sourceUrl && (
+									<span class="list-meta">External recipe source available</span>
+								)
+							}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</BaseLayout>

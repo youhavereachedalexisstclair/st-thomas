@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
+import { parish, recipeCategoryLabels } from '../data/parish';
+
+const reflections = (await getCollection('reflections')).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const recent = reflections.slice(0, 5);
+const categories = Object.entries(recipeCategoryLabels);
+---
+
+<BaseLayout title="Home">
+	<section class="hero" aria-label="Welcome">
+		<div class="hero-media">
+			<img
+				src="/icons/pantocrator.jpg"
+				alt="Icon of Christ Pantocrator from Saint Catherine's Monastery, Sinai"
+				width="1280"
+				height="2388"
+				fetchpriority="high"
+			/>
+		</div>
+		<div class="hero-veil" aria-hidden="true"></div>
+		<div class="hero-content">
+			<p class="hero-kicker">Welcome</p>
+			<h1>{parish.name}</h1>
+			<p class="hero-denom">{parish.denomination}</p>
+			<p class="hero-lede">
+				Visitors are always welcome. Come and see the beauty of Orthodox worship in Springfield,
+				Missouri.
+			</p>
+			<div class="cta-row">
+				<a class="btn btn-solid" href="/calendar/">Calendar</a>
+				<a class="btn" href="#schedule">Service Times</a>
+				<a class="btn" href="/donate/">Donate</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="schedule">
+		<div class="section-head reveal">
+			<h2>Service Schedule</h2>
+			<Ornament />
+			<p>
+				Please see the calendar for changes and additional service times. Visitors are always
+				welcome to attend any services.
+			</p>
+		</div>
+		<div class="split reveal">
+			<div class="panel">
+				<p class="contact-label">Weekly Services</p>
+				<ul class="schedule-list">
+					{
+						parish.services.map((service) => (
+							<li>
+								<span class="service-name">{service.name}</span>
+								<span class="service-meta">
+									{service.time}
+									<br />
+									{service.day}
+								</span>
+							</li>
+						))
+					}
+				</ul>
+				<div class="cta-row" style="margin-top: 1.5rem;">
+					<a class="btn btn-quiet" href="/calendar/">View Full Calendar</a>
+				</div>
+			</div>
+			<div class="panel">
+				<p class="contact-label">Find Us</p>
+				<ul class="contact-list">
+					<li>
+						<span class="contact-label">Address</span>
+						<a href={parish.address.mapsUrl}>{parish.address.full}</a>
+					</li>
+					<li>
+						<span class="contact-label">Phone</span>
+						<a href={parish.phoneHref}>{parish.phone}</a>
+					</li>
+					<li>
+						<span class="contact-label">Email</span>
+						<a href={parish.emailHref}>{parish.email}</a>
+					</li>
+					<li>
+						<span class="contact-label">Affiliation</span>
+						<span>{parish.affiliation}</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="split reveal">
+			<div>
+				<div class="section-head" style="text-align: left; margin-bottom: 1.25rem;">
+					<h2>Recent Reflections</h2>
+					<Ornament />
+				</div>
+				<ul class="list-links">
+					{
+						recent.map((post) => (
+							<li>
+								<a href={`/reflections/${post.id}/`}>
+									<span class="list-title">{post.data.title}</span>
+									<span class="list-meta">
+										{post.data.date.toLocaleDateString('en-US', {
+											year: 'numeric',
+											month: 'long',
+											day: 'numeric',
+										})}
+									</span>
+								</a>
+							</li>
+						))
+					}
+				</ul>
+				<div class="cta-row" style="margin-top: 1.25rem;">
+					<a class="btn btn-quiet" href="/reflections/">All Reflections</a>
+				</div>
+			</div>
+			<figure class="icon-aside">
+				<img
+					src="/icons/thomas.jpg"
+					alt="Icon of the Holy Apostle Thomas"
+					width="300"
+					height="712"
+					loading="lazy"
+				/>
+			</figure>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="section-head reveal">
+			<h2>Recipes</h2>
+			<Ornament />
+			<p>Lenten and fasting-friendly recipes shared by the parish.</p>
+		</div>
+		<div class="category-grid reveal">
+			{
+				categories.map(([slug, label]) => (
+					<a class="category-link" href={`/recipes/${slug}/`}>
+						{label}
+					</a>
+				))
+			}
+		</div>
+	</section>
+</BaseLayout>

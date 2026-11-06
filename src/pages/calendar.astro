@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
+import { parish } from '../data/parish';
+
+const calendars = Object.values(parish.calendars);
+const embedSrc = `https://calendar.google.com/calendar/embed?height=700&wkst=1&bgcolor=%23ffffff&ctz=America%2FChicago&showTitle=0&showPrint=0&showTabs=1&showCalendars=1&src=${encodeURIComponent(parish.calendars.services.src)}&src=${encodeURIComponent(parish.calendars.feasts.src)}&src=${encodeURIComponent(parish.calendars.events.src)}&color=%230B1C3D&color=%23C9A227&color=%235C1F2A`;
+---
+
+<BaseLayout
+	title="Calendar"
+	description="Service schedule and parish calendar for Saint Thomas the Apostle Orthodox Church."
+>
+	<header class="page-hero">
+		<h1>Calendar</h1>
+		<Ornament />
+		<p>Weekly services, feasts, and parish events. Subscribe to keep the schedule with you.</p>
+	</header>
+
+	<section class="section">
+		<div class="split reveal">
+			<div class="panel">
+				<p class="contact-label">Weekly Services</p>
+				<ul class="schedule-list">
+					{
+						parish.services.map((service) => (
+							<li>
+								<span class="service-name">{service.name}</span>
+								<span class="service-meta">
+									{service.time}
+									<br />
+									{service.day}
+								</span>
+							</li>
+						))
+					}
+				</ul>
+				<p style="margin-top: 1.25rem; color: var(--ink-soft);">
+					Please see the calendar below for changes and additional service times. Visitors are always
+					welcome.
+				</p>
+			</div>
+			<figure class="icon-aside">
+				<img
+					src="/icons/theotokos.jpg"
+					alt="Icon of the Virgin of Vladimir"
+					width="960"
+					height="1398"
+					loading="lazy"
+				/>
+			</figure>
+		</div>
+	</section>
+
+	<section class="section reveal">
+		<div class="section-head">
+			<h2>Parish Calendar</h2>
+			<Ornament />
+		</div>
+		<iframe
+			class="calendar-frame"
+			src={embedSrc}
+			title="Saint Thomas the Apostle parish calendar"
+			loading="lazy"
+			referrerpolicy="no-referrer-when-downgrade"></iframe>
+	</section>
+
+	<section class="section reveal">
+		<div class="section-head">
+			<h2>Subscribe</h2>
+			<Ornament />
+			<p>Add Services, Feasts, or Events to your own calendar.</p>
+		</div>
+		<div class="subscribe-grid">
+			{
+				calendars.map((cal) => (
+					<div class="panel subscribe-card">
+						<h3>{cal.label}</h3>
+						<div class="cta-row">
+							<a class="btn" href={cal.webcal}>
+								Apple / Outlook
+							</a>
+							<a
+								class="btn"
+								href={`https://www.google.com/calendar/render?cid=${encodeURIComponent(cal.webcal)}`}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Google
+							</a>
+							<a class="btn" href={cal.ics} target="_blank" rel="noopener noreferrer">
+								ICS URL
+							</a>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</section>
+</BaseLayout>

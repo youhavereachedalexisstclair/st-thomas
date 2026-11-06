@@ -1,0 +1,25 @@
+---
+import { parish } from '../data/parish';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="footer-inner">
+		<div class="footer-brand">{parish.name} {parish.denomination}</div>
+		<div class="footer-meta">
+			<p>{parish.affiliation}</p>
+			<p>
+				<a href={parish.address.mapsUrl}>{parish.address.full}</a>
+				·
+				<a href={parish.phoneHref}>{parish.phone}</a>
+				·
+				<a href={parish.emailHref}>{parish.email}</a>
+			</p>
+			<p>Copyright © {year} | Saint Thomas the Apostle Orthodox Church</p>
+		</div>
+		<p class="footer-credit">
+			Icons: Christ Pantocrator (Sinai), Apostle Thomas, and the Virgin of Vladimir — public domain via Wikimedia Commons.
+		</p>
+	</div>
+</footer>
