@@ -27,11 +27,8 @@ const categories = Object.entries(recipeCategoryLabels).map(([slug, label]) => (
 			{
 				categories.map((cat) => (
 					<a class="category-link" href={`/recipes/${cat.slug}/`}>
-						{cat.label}
-						<br />
-						<span style="font-size: 0.85rem; letter-spacing: 0.08em; opacity: 0.8;">
-							{cat.count} recipes
-						</span>
+						<span class="category-label">{cat.label}</span>
+						<span class="category-count">{cat.count} recipes</span>
 					</a>
 				))
 			}
