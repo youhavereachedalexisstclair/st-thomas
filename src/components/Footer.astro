@@ -8,6 +8,12 @@ const year = new Date().getFullYear();
 	<div class="footer-inner">
 		<div class="footer-brand">{parish.name} {parish.denomination}</div>
 		<div class="footer-meta">
+			<p class="footer-links">
+				<a href="/visit/">Plan a visit</a>
+				<a href="/orthodoxy/">About Orthodoxy</a>
+				<a href="/resources/">Recommended reading</a>
+				<a href={parish.links.oca}>Orthodox Church in America</a>
+			</p>
 			<p>{parish.affiliation}</p>
 			<p>
 				<a href={parish.address.mapsUrl}>{parish.address.full}</a>

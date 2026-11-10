@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
+import { parish } from '../data/parish';
+import { readings } from '../data/readings';
+---
+
+<BaseLayout
+	title="Resources"
+	description="Recommended reading from the bookstore at Saint Thomas the Apostle Orthodox Church in Springfield, Missouri."
+>
+	<header class="page-hero">
+		<p class="hero-kicker">Bookstore</p>
+		<h1>Recommended Reading</h1>
+		<Ornament />
+		<p>
+			The parish keeps a small bookstore. These are a few of the books it recommends for someone
+			getting to know the Orthodox Church.
+		</p>
+	</header>
+
+	<section class="section section-narrow">
+		<ul class="reading-list reveal">
+			{
+				readings.map((book) => (
+					<li>
+						<h2>{book.title}</h2>
+						{book.author && <p class="reading-by">{book.author}</p>}
+						<p>{book.note}</p>
+						{book.url && (
+							<p class="reading-link">
+								<a
+									class="btn btn-quiet"
+									href={book.url}
+									{...(book.url.startsWith('http')
+										? { target: '_blank', rel: 'noopener noreferrer' }
+										: {})}
+								>
+									Learn more
+								</a>
+							</p>
+						)}
+					</li>
+				))
+			}
+		</ul>
+		<p class="reveal" style="margin-top: 1.75rem;">
+			Copies are kept at the church. Ask on a Sunday, or
+			<a href={parish.emailHref}>write the office</a>, and someone can help you find a title.
+		</p>
+	</section>
+</BaseLayout>

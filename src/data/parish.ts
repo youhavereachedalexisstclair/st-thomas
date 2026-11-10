@@ -3,6 +3,30 @@ export const parish = {
 	shortName: 'Saint Thomas',
 	denomination: 'Orthodox Church',
 	affiliation: 'A Parish of the Diocese of the Midwest (OCA)',
+	founded: 1978,
+	deanery: 'Kansas City Deanery',
+	language: 'English',
+	rector: {
+		name: 'Father Basil Ferguson',
+		formalName: 'Rev. Basil Ferguson',
+		role: 'Rector',
+	},
+	hierarchs: [
+		{
+			name: 'His Beatitude Tikhon',
+			role: 'Archbishop of Washington, Metropolitan of All America and Canada',
+		},
+		{
+			name: 'His Eminence Daniel',
+			role: 'Archbishop of Chicago and the Midwest',
+		},
+	],
+	links: {
+		oca: 'https://www.oca.org/',
+		orthodoxFaith: 'https://www.oca.org/orthodoxy/the-orthodox-faith',
+		diocese: 'https://domoca.org/',
+		directory: 'https://www.oca.org/parishes/oca-mw-sgfsta',
+	},
 	address: {
 		street: '4200 S Holiday Ave',
 		city: 'Springfield',

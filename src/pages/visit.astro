@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
+import { parish } from '../data/parish';
+
+const notes = [
+	{
+		title: 'Children are welcome',
+		text: 'A church full of children is a healthy church. Wiggles and small sounds are part of the service. Step out with a little one whenever you need to, and come back in when you are ready.',
+	},
+	{
+		title: 'Dress simply',
+		text: 'Modest clothing that covers the shoulders and knees is a kind guide. A coat and tie are not required. If this is your first time, come as you are. No one is turned away for what they are wearing.',
+	},
+	{
+		title: 'Let the phone rest',
+		text: 'Silence your phone before the service begins. Photos are best left until after the dismissal, and only if the people around you are comfortable.',
+	},
+	{
+		title: 'Stand, or sit',
+		text: 'Standing is the traditional posture of prayer, and many people stand for much of the service. Sit whenever you need to. If you are able, stand for the reading of the Gospel. Elders, those who are pregnant or unwell, and anyone who is tired should sit without a second thought.',
+	},
+	{
+		title: 'Communion',
+		text: 'Holy Communion is offered to Orthodox Christians who are prepared to receive. If you are visiting, please remain in your place. Blessed bread is often shared with everyone afterward, including guests. When you are unsure, just ask.',
+	},
+	{
+		title: 'You may simply watch',
+		text: 'People will cross themselves, bow, light candles, and sometimes kiss an icon. Join in if you wish. There is no need to do any of it on a first visit. If you would like to make the sign of the cross: with the thumb and first two fingers together, touch the forehead, the chest, the right shoulder, then the left.',
+	},
+];
+---
+
+<BaseLayout
+	title="Visit"
+	description="What to expect at Saint Thomas the Apostle Orthodox Church in Springfield, Missouri, and how a first visit works."
+>
+	<header class="page-hero">
+		<p class="hero-kicker">Visitors welcome</p>
+		<h1>Come and See</h1>
+		<Ornament />
+		<p>
+			You are welcome at every service. You do not need to know the words, and you do not need to
+			know anyone yet.
+		</p>
+		<nav class="anchor-nav" aria-label="On this page">
+			<a href="#when">When to come</a>
+			<a href="#sunday">Sunday morning</a>
+			<a href="#first-visit">A first visit</a>
+			<a href="#joining">Becoming Orthodox</a>
+		</nav>
+	</header>
+
+	<section class="section" id="when">
+		<div class="split reveal">
+			<div>
+				<h2>When to come</h2>
+				<p>
+					Saturday evening Vespers is a gentle way to begin. It is shorter and quieter than Sunday
+					morning, and it prepares the church for the Liturgy. Sunday is the main gathering of the
+					week.
+				</p>
+				<p>
+					All of the services are in English. The calendar lists feast days
+					and any changes to the usual times. If you write ahead, someone can watch for you and
+					answer questions before you arrive.
+				</p>
+				<div class="cta-row">
+					<a class="btn btn-quiet" href="/calendar/">View the calendar</a>
+					<a class="btn btn-quiet" href={parish.emailHref}>Email the office</a>
+				</div>
+			</div>
+			<div class="panel">
+				<p class="contact-label">Weekly services</p>
+				<ul class="schedule-list">
+					{
+						parish.services.map((service) => (
+							<li>
+								<span class="service-name">{service.name}</span>
+								<span class="service-meta">
+									{service.time}
+									<br />
+									{service.day}
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="sunday">
+		<div class="section-head reveal">
+			<h2>What Sunday morning is like</h2>
+			<Ornament />
+			<p>
+				The Hours begin at 8:40 a.m. The Divine Liturgy begins at 9:00 a.m. Together they usually
+				last until late morning. Arriving at 9:00 is perfectly fine.
+			</p>
+		</div>
+		<div class="path-grid reveal">
+			<article class="panel">
+				<p class="contact-label">Heaven and earth</p>
+				<h3>The Divine Liturgy</h3>
+				<p>
+					The Liturgy is the service in which the Church offers the Eucharist. Bread and wine
+					become the Body and Blood of Christ, and the faithful receive Him. At the end we sing
+					that we have seen the true Light and have found the true faith.
+				</p>
+			</article>
+			<article class="panel">
+				<p class="contact-label">For the newcomer</p>
+				<h3>It will feel unfamiliar</h3>
+				<p>
+					Most of the service is sung. People stand, cross themselves, and move toward icons. That
+					can feel like a lot at first. Many of the people here once felt the same way. Stay
+					through one service if you can. The shape of it becomes clear with time.
+				</p>
+			</article>
+		</div>
+	</section>
+
+	<section class="section" id="first-visit">
+		<div class="split reveal">
+			<div>
+				<h2>For a first visit</h2>
+				<p>
+					These are customs of the house, offered so you can relax. They are not a test. Come
+					seeking the Lord, and you are in the right place.
+				</p>
+				<ul class="note-list">
+					{
+						notes.map((note) => (
+							<li>
+								<h3>{note.title}</h3>
+								<p>{note.text}</p>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+			<div>
+				<figure class="icon-aside" style="min-height: 16rem; margin: 0 0 1rem;">
+					<img
+						src="/icons/thomas.jpg"
+						alt="Icon of the Holy Apostle Thomas"
+						width="300"
+						height="712"
+						loading="lazy"
+					/>
+				</figure>
+				<div class="panel">
+					<p class="contact-label">Find us</p>
+					<ul class="contact-list">
+						<li>
+							<span class="contact-label">Address</span>
+							<a href={parish.address.mapsUrl}>{parish.address.full}</a>
+						</li>
+						<li>
+							<span class="contact-label">Phone</span>
+							<a href={parish.phoneHref}>{parish.phone}</a>
+						</li>
+						<li>
+							<span class="contact-label">Email</span>
+							<a href={parish.emailHref}>{parish.email}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section-narrow" id="joining">
+		<div class="section-head reveal">
+			<h2>If you want to go further</h2>
+			<Ornament />
+			<p>
+				Becoming Orthodox is closer to a courtship than to filling out a form. It takes the time it
+				takes, and {parish.rector.name} walks with each person.
+			</p>
+		</div>
+		<ol class="steps reveal">
+			<li>
+				<h3>Come, and ask</h3>
+				<p>
+					Worship with us for a while.
+					<a href="/resources/">Read from the parish bookstore</a>. Talk with the people next to you. When you are ready,
+					write or call and ask to speak with Father Basil. There is no deadline.
+				</p>
+			</li>
+			<li>
+				<h3>A time of preparation</h3>
+				<p>
+					When you and the priest agree, you may be received as a catechumen: someone preparing to
+					enter the Church. The heart of that time is being present at the services, together with
+					instruction in the faith. The parish does not hand you a single official catechism.
+					The services themselves do a great deal of the teaching.
+				</p>
+			</li>
+			<li>
+				<h3>Reception into the Church</h3>
+				<p>
+					A person enters through Holy Baptism and Chrismation. When someone has already been
+					baptized in the name of the Trinity, the priest helps discern whether reception is by
+					Chrismation. Either way, the new Christian receives Holy Communion and continues the life
+					of prayer, fasting, confession, and the Sunday Liturgy.
+				</p>
+			</li>
+		</ol>
+		<p class="reveal" style="text-align: center; margin-top: 1.75rem;">
+			“Come and see.”
+			<a href="/orthodoxy/">Read a short introduction to Orthodoxy</a>, or
+			<a href={parish.links.orthodoxFaith}>explore the OCA’s guide, <em>The Orthodox Faith</em></a>.
+		</p>
+	</section>
+</BaseLayout>

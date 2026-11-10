@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Ornament from '../components/Ornament.astro';
+import { parish } from '../data/parish';
+
+const senses = [
+	{
+		name: 'Sight',
+		text: 'Icons of Christ, His Mother, and the saints surround the worshippers. They are windows into the life of the Church, not decorations.',
+	},
+	{
+		name: 'Sound',
+		text: 'The service is sung. The hymns are about God, and about the people who gave their lives to Him.',
+	},
+	{
+		name: 'Scent',
+		text: 'Incense rises with the prayers of the people, as the psalms have described from ancient times.',
+	},
+	{
+		name: 'Taste',
+		text: 'The center of Sunday morning is Holy Communion: bread and wine, the Body and Blood of Christ.',
+	},
+	{
+		name: 'Touch',
+		text: 'People cross themselves, bow, and sometimes kiss an icon or the Gospel book as a sign of love.',
+	},
+];
+
+const questions = [
+	{
+		q: 'What does “Orthodox” mean?',
+		a: 'It means right worship and right belief. The Orthodox Church keeps the faith confessed by the apostles and the early councils, and still prays in continuity with that faith.',
+	},
+	{
+		q: 'Is this Greek Orthodox or Russian Orthodox?',
+		a: 'Those names usually describe a language or a family history, not a different faith. There is one Orthodox Church. Saint Thomas is a parish of the Orthodox Church in America, and the services here are in English. The people include families who grew up Orthodox and many who found the Church as adults.',
+	},
+	{
+		q: 'How is this different from other Christian churches?',
+		a: 'We share the Scriptures and love for Jesus Christ with other Christians. Orthodox worship is older, and fuller to the senses, than most American services. Its center is Holy Communion. Salvation is understood as union with God: a healing of the whole person, lived through repentance, prayer, and the sacraments of the Church.',
+	},
+	{
+		q: 'Why have I only just heard of it?',
+		a: 'For many centuries the Orthodox Church flourished in places such as Greece, Russia, the Middle East, and Eastern Europe, often under persecution. It is newer to the middle of the United States, though Orthodox Christianity has been in North America since missionaries arrived in Alaska in 1794. This parish was founded in 1978.',
+	},
+	{
+		q: 'Do you worship the icons?',
+		a: 'No. Worship belongs to God alone: Father, Son, and Holy Spirit. An icon is an image of Christ, of His Mother, or of a saint. To kiss an icon is a sign of honor and affection, as you might kiss a photograph of someone you love. The honor passes to the person shown, not to the paint or the wood.',
+	},
+	{
+		q: 'Can anyone come?',
+		a: 'Yes. Visitors are welcome at every service. You do not need to know the order of the service, and you do not need to do anything that feels unfamiliar. Come and see.',
+	},
+];
+---
+
+<BaseLayout
+	title="Orthodoxy"
+	description="A visitor’s introduction to the Orthodox Church, and to Saint Thomas the Apostle Orthodox Church in the Orthodox Church in America."
+>
+	<header class="page-hero">
+		<p class="hero-kicker">The Faith</p>
+		<h1>The Orthodox Church</h1>
+		<Ornament />
+		<p>
+			Saint Thomas is an English-speaking parish of the Orthodox Church in America in Springfield,
+			Missouri. This is a short introduction for anyone who is curious.
+		</p>
+		<nav class="anchor-nav" aria-label="On this page">
+			<a href="#the-church">The Church</a>
+			<a href="#worship">Worship</a>
+			<a href="#oca">The OCA</a>
+			<a href="#questions">Questions</a>
+		</nav>
+	</header>
+
+	<section class="section" id="the-church">
+		<div class="split reveal">
+			<div>
+				<h2>One holy Church</h2>
+				<p>
+					The Orthodox Church is the one, holy, catholic, and apostolic Church. “Catholic” here
+					means universal: the same faith, in every place, for every people. From the day of
+					Pentecost, Christians have gathered to hear the Gospel, to pray, and to receive Christ in
+					Holy Communion.
+				</p>
+				<p>
+					A few families founded Saint Thomas in {parish.founded}. For years the community was
+					served by visiting clergy. In the early 2000s it became a stable parish, and it has kept
+					growing. It is the Orthodox church of Springfield. Its people come from many backgrounds,
+					and from every age, including a good number of families with children.
+				</p>
+				<p>
+					Orthodoxy was not familiar in the Ozarks for a long time. Many who worship here found in
+					it a spiritual home: the Christian life in direct continuity with the apostles.
+				</p>
+			</div>
+			<figure class="icon-aside">
+				<img
+					src="/icons/theotokos.jpg"
+					alt="Icon of the Virgin of Vladimir, the Mother of God holding the Christ child"
+					width="1024"
+					height="1536"
+					loading="lazy"
+				/>
+			</figure>
+		</div>
+	</section>
+
+	<section class="section" id="worship">
+		<div class="section-head reveal">
+			<h2>Worship with the whole person</h2>
+			<Ornament />
+			<p>
+				God made the senses and called them good. Orthodox worship asks for all of them, so that
+				the whole person can pray.
+			</p>
+		</div>
+		<div class="sense-grid reveal">
+			{
+				senses.map((sense) => (
+					<article class="sense-card">
+						<h3>{sense.name}</h3>
+						<p>{sense.text}</p>
+					</article>
+				))
+			}
+		</div>
+		<div class="panel reveal" style="margin-top: 1.5rem;">
+			<p>
+				The services are the heart of parish life. Alongside them, Christians keep a rule of
+				personal prayer, read the Gospels, fast in the seasons of the Church, and remember the
+				saints. The Jesus Prayer — “Lord Jesus Christ, Son of God, have mercy on me” — is one
+				simple way the Church has always helped a distracted mind return to God.
+			</p>
+			<div class="cta-row">
+				<a class="btn btn-quiet" href="/calendar/">Service calendar</a>
+				<a class="btn btn-quiet" href="/resources/">Recommended reading</a>
+				<a class="btn btn-quiet" href="/recipes/">Fasting recipes</a>
+				<a class="btn btn-quiet" href="/reflections/">Reflections</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section" id="oca">
+		<div class="section-head reveal">
+			<h2>The Orthodox Church in America</h2>
+			<Ornament />
+			<p>
+				{parish.name} belongs to the {parish.deanery} of the Diocese of the Midwest. The
+				Orthodox Church in America is a self-governing Orthodox Church. Its mission is to preach
+				the Gospel and baptize in the name of the Father, and of the Son, and of the Holy Spirit,
+				in the language of the people who live here.
+			</p>
+		</div>
+		<div class="people-grid reveal">
+			{
+				parish.hierarchs.map((person) => (
+					<article class="person-card">
+						<p class="contact-label">Hierarch</p>
+						<h3>{person.name}</h3>
+						<p>{person.role}</p>
+					</article>
+				))
+			}
+			<article class="person-card">
+				<p class="contact-label">This parish</p>
+				<h3>{parish.rector.name}</h3>
+				<p>{parish.rector.role}</p>
+				<p>
+					<a href={parish.emailHref}>Write the office</a>
+					{' · '}
+					<a href={parish.phoneHref}>{parish.phone}</a>
+				</p>
+			</article>
+		</div>
+		<div class="cta-row reveal" style="justify-content: center; margin-top: 1.5rem;">
+			<a class="btn btn-quiet" href={parish.links.oca}>Orthodox Church in America</a>
+			<a class="btn btn-quiet" href={parish.links.diocese}>Diocese of the Midwest</a>
+			<a class="btn btn-quiet" href={parish.links.orthodoxFaith}>The Orthodox Faith</a>
+		</div>
+		<p class="reveal" style="text-align: center; color: var(--ink-soft); margin: 1.25rem auto 0; max-width: 38rem;">
+			<em>The Orthodox Faith</em>, by Protopresbyter Thomas Hopko, is the Orthodox Church in
+			America’s fuller introduction to doctrine, worship, history, and the Christian life. Our
+			<a href={parish.links.directory}>parish listing</a> is kept in the OCA directory.
+		</p>
+	</section>
+
+	<section class="section section-narrow" id="questions">
+		<div class="section-head reveal">
+			<h2>Questions visitors ask</h2>
+			<Ornament />
+		</div>
+		<div class="faq reveal">
+			{
+				questions.map((item) => (
+					<details>
+						<summary>{item.q}</summary>
+						<p>{item.a}</p>
+					</details>
+				))
+			}
+		</div>
+		<div class="cta-row reveal" style="justify-content: center; margin-top: 2rem;">
+			<a class="btn btn-solid" href="/visit/">Plan a visit</a>
+			<a class="btn btn-quiet" href={parish.emailHref}>Ask a question</a>
+		</div>
+	</section>
+</BaseLayout>
